@@ -22,7 +22,7 @@ IndentPPDirectives: None
 IndentCaseLabels: false
 DerivePointerAlignment: false
 AlwaysBreakTemplateDeclarations: true
-SortIncludes: true 
+SortIncludes: false
 
 PackConstructorInitializers: CurrentLine
 BreakConstructorInitializers: BeforeComma
