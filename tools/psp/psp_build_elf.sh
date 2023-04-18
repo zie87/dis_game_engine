@@ -1,0 +1,21 @@
+#!/bin/bash -ex
+
+SCRIPT_RELATIVE_DIR=$(dirname "${BASH_SOURCE[0]}") 
+DATA_DIR="${SCRIPT_RELATIVE_DIR}/data"
+
+INPUT=$1
+BUILD_DIR="${INPUT%/*}" 
+
+PSP_STRIP_NAME=${INPUT}_strip
+
+PSP_EBOOT_TITLE="$2"
+PSP_EBOOT_ICON="${DATA_DIR}/icon.png"
+PSP_EBOOT_UNKPNG="${DATA_DIR}/pic0.png"
+PSP_EBOOT_PIC1="${DATA_DIR}/pic1.png"
+
+psp-fixup-imports $INPUT
+psp-strip $INPUT -o ${PSP_STRIP_NAME}
+mksfo "${PSP_EBOOT_TITLE}" "${BUILD_DIR}/PARAM.SFO"
+pack-pbp "${BUILD_DIR}/EBOOT.PBP" "${BUILD_DIR}/PARAM.SFO" "${PSP_EBOOT_ICON}" \
+    NULL "${PSP_EBOOT_UNKPNG}" "${PSP_EBOOT_PIC1}" \
+    NULL ${PSP_STRIP_NAME} NULL
