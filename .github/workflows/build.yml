@@ -50,3 +50,19 @@ jobs:
       run: meson setup builddir/ --cross-file ./tools/psp/mips_psp_elf.build --buildtype ${{ matrix.build_type }}
     - name: Compile
       run: meson compile -C builddir/
+
+  build-ps2:
+    name: Build PS2
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        build_type: [debug, release]
+    container: zie87/ps2dev:latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    - name: Configure
+      run: meson setup builddir/ --cross-file ./tools/ps2/mips64r5900el_ps2_ee.build --buildtype ${{ matrix.build_type }}
+    - name: Compile
+      run: meson compile -C builddir/
