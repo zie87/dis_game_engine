@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-linux:
-    name: Build Linux
+    name: Build Linux SDL2
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -26,11 +26,27 @@ jobs:
     - run: pip install meson ninja
     - run: |
         sudo apt update 
-        sudo apt install git
+        sudo apt install git libsdl2-dev
     - name: Configure
       run: meson setup builddir/ --buildtype ${{ matrix.build_type }}
       env:
         CC: gcc-12
         CXX: g++-12
+    - name: Compile
+      run: meson compile -C builddir/
+
+  build-psp:
+    name: Build PSP
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        build_type: [debug, release]
+    container: zie87/pspdev:latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    - name: Configure
+      run: meson setup builddir/ --cross-file ./tools/psp/mips_psp_elf.build --buildtype ${{ matrix.build_type }}
     - name: Compile
       run: meson compile -C builddir/
