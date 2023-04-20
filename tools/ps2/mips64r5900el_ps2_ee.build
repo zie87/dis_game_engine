@@ -1,0 +1,40 @@
+[constants]
+arch = 'mips64r5900el-ps2-elf'
+ps2dev_dir= '/usr/local/ps2dev'
+
+[binaries]
+c           = arch + '-gcc'
+cpp         = arch + '-g++'
+ld          = arch + '-ld'
+ar          = arch + '-ar'
+as          = arch + '-as'
+size        = arch + '-size'
+objdump     = arch + '-objdump'
+objcopy     = arch + '-objcopy'
+readelf     = arch + '-readelf'
+strip       = arch + '-strip'
+gdb         = arch + '-gdb'
+
+[built-in options]
+b_staticpic = 'false'
+default_library = 'static'
+c_args      = [
+                '-G0',
+                '-U_FILE_OFFSET_BITS',
+                '-D_EE',
+                '-I' + ps2dev_dir + '/ps2sdk/ee/include',
+                '-I' + ps2dev_dir + '/ps2sdk/common/include',
+              ]
+c_link_args = [
+                '-T' + ps2dev_dir + '/ps2sdk/ee/startup/linkfile',
+                '-L' + ps2dev_dir + '/ps2sdk/ee/lib',
+                '-Wl,-zmax-page-size=128',
+              ]
+cpp_args      = c_args + []
+cpp_link_args = c_link_args + []
+
+[host_machine]
+system      = 'ps2'
+cpu_family  = 'mips'
+cpu         = 'mips'
+endian      = 'little'

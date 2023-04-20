@@ -39,7 +39,12 @@ if host_machine.system() == 'psp'
         '-lpspnet',
         '-lpspnet_apctl',
     ]
+elif host_machine.system() == 'ps2'
+    dge_c_args += ['-DDGE_PLATFORM_PS2']
+    dge_cpp_args += dge_c_args
+    dge_link_args += ['-ldebug', '-lc']
 
+    dge_srcs += ['src/platform/ps2/thread/thread_policy.cpp']
 else
     sdl2_dep = dependency('sdl2')
     thread_dep = dependency('threads')
