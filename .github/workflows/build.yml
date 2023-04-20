@@ -1,0 +1,36 @@
+name: build
+
+on:
+  push:
+    tags:
+    - 'v*'
+    branches:
+    - '**'
+    pull_request:
+      types: [opened, synchronize, reopened]
+
+jobs:
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        build_type: [debug, release]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - run: pip install meson ninja
+    - run: |
+        sudo apt update 
+        sudo apt install git
+    - name: Configure
+      run: meson setup builddir/ --buildtype ${{ matrix.build_type }}
+      env:
+        CC: gcc-12
+        CXX: g++-12
+    - name: Compile
+      run: meson compile -C builddir/
