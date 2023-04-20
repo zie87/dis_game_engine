@@ -7,6 +7,10 @@
 #include "dge/platform/psp/thread/thread_cfg.hpp"
 #include "dge/platform/psp/thread/thread_policy.hpp"
 #include "dge/platform/psp/thread/sleep.hpp"
+#elif defined(DGE_PLATFORM_PS2)
+#include "dge/platform/ps2/thread/thread_cfg.hpp"
+#include "dge/platform/ps2/thread/thread_policy.hpp"
+#include "dge/platform/ps2/thread/sleep.hpp"
 #elif defined(DGE_PLATFORM_SDL)
 #include "dge/platform/sdl/thread/thread_cfg.hpp"
 #include "dge/platform/sdl/thread/thread_policy.hpp"

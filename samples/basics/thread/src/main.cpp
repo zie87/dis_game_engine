@@ -11,6 +11,15 @@ PSP_MODULE_INFO("basicthread", 0, 1, 1);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
 
 #define LOG pspDebugScreenPrintf
+#elif defined(DGE_PLATFORM_PS2)
+#include <stdio.h>
+#include <tamtypes.h>
+#include <sifrpc.h>
+#include <debug.h>
+#include <unistd.h>
+
+#define LOG scr_printf
+
 #elif defined(DGE_PLATFORM_SDL)
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
@@ -49,6 +58,16 @@ void run() {
 #if defined(DGE_PLATFORM_PSP)
 int main([[maybe_unused]] int argc, [[maybe_unused]] const char* argv[]) {
     pspDebugScreenInit();
+    run();
+}
+#elif defined(DGE_PLATFORM_PS2)
+
+int main([[maybe_unused]] int argc, [[maybe_unused]] const char* argv[]) {
+    SifInitRpc(0);
+    init_scr();
+    scr_clear();
+    scr_setXY(0, 5);
+
     run();
 }
 #elif defined(DGE_PLATFORM_SDL)
