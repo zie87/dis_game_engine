@@ -13,4 +13,4 @@ inline void sleep_for_us(pf_tag_psp, const dge::microseconds sleep_duration) noe
 }
 
 }  // namespace dge::detail
-#endif  // DGE_PLATFORM_SDL_THREAD_SLEEP_HPP
+#endif  // DGE_PLATFORM_PSP_THREAD_SLEEP_HPP
