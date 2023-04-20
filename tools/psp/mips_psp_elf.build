@@ -1,5 +1,6 @@
 [constants]
 arch = 'psp'
+pspdev_dir= '/usr/local/pspdev'
 
 [binaries]
 c           = arch + '-gcc'
@@ -22,13 +23,13 @@ c_args      = [
                 '-G0',
                 '-U_FILE_OFFSET_BITS',
                 '-DPSP', '-D__PSP__',
-                '-I/usr/local/pspdev/psp/include',
-                '-I/usr/local/pspdev/psp/sdk/include',
+                '-I'+ pspdev_dir +'/psp/include',
+                '-I'+ pspdev_dir +'/psp/sdk/include',
               ]
 c_link_args = [
-                '-L/usr/local/pspdev/lib',
-                '-L/usr/local/pspdev/psp/lib',
-                '-L/usr/local/pspdev/psp/sdk/lib',
+                '-L'+ pspdev_dir +'/lib',
+                '-L'+ pspdev_dir +'/psp/lib',
+                '-L'+ pspdev_dir +'/psp/sdk/lib',
                 '-Wl,-zmax-page-size=128',
               ]
 cpp_args      = c_args + []

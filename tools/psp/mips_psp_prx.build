@@ -1,5 +1,6 @@
 [constants]
 arch = 'psp'
+pspdev_dir= '/usr/local/pspdev'
 
 [binaries]
 c           = arch + '-gcc'
@@ -21,16 +22,18 @@ default_library = 'static'
 c_args      = [
                 '-G0',
                 '-U_FILE_OFFSET_BITS',
-                '-I/usr/local/pspdev/psp/include',
-                '-I/usr/local/pspdev/psp/sdk/include',
+                '-DPSP', '-D__PSP__',
+                '-I'+ pspdev_dir +'/psp/include',
+                '-I'+ pspdev_dir +'/psp/sdk/include',
               ]
 c_link_args = [
-                '-L/usr/local/pspdev/psp/lib',
-                '-L/usr/local/pspdev/psp/sdk/lib',
-                '-specs=/usr/local/pspdev/psp/sdk/lib/prxspecs',
+                '-L'+ pspdev_dir +'/lib',
+                '-L'+ pspdev_dir +'/psp/lib',
+                '-L'+ pspdev_dir +'/psp/sdk/lib',
+                '-specs='+ pspdev_dir +'/psp/sdk/lib/prxspecs',
                 '-Wl,-zmax-page-size=128',
-                '-Wl,-q,-T/usr/local/pspdev/psp/sdk/lib/linkfile.prx',
-                '/usr/local/pspdev/psp/sdk/lib/prxexports.o',
+                '-Wl,-q,-T'+ pspdev_dir +'/psp/sdk/lib/linkfile.prx',
+                pspdev_dir +'/psp/sdk/lib/prxexports.o',
                 '-Wl,--gc-sections',
               ]
 cpp_args      = c_args + []
