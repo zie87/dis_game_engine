@@ -66,3 +66,19 @@ jobs:
       run: meson setup builddir/ --cross-file ./tools/ps2/mips64r5900el_ps2_ee.build --buildtype ${{ matrix.build_type }}
     - name: Compile
       run: meson compile -C builddir/
+
+  build-mingw:
+    name: Build MinGW SDL2
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        build_type: [debug, release]
+    container: zie87/mingw:latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+    - name: Configure
+      run: meson setup builddir/ --cross-file ./tools/win/x86_64-w64-mingw32.build --buildtype ${{ matrix.build_type }} --force-fallback-for=sdl2
+    - name: Compile
+      run: meson compile -C builddir/
