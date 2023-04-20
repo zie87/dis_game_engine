@@ -1,8 +1,3 @@
-FROM fedora:37
+FROM alpine:3.17
 
-RUN dnf update -y \
-    && dnf install -y meson ninja-build \
-    && dnf install -y mingw64-gcc-c++ mingw64-boost \
-    && dnf install -y mingw32-gcc-c++ mingw32-boost \
-    && dnf install -y wine \
-    && dnf clean all
+RUN apk add --no-cache bash make meson ninja mingw-w64-gcc wine
